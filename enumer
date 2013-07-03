@@ -1,0 +1,32 @@
+#!/usr/bin/sh
+
+# enumer[ator]
+# Print the fields and the number of the fields on the next line.
+#
+# Author: Andrew Brownfield
+# email:  abrownfi@redhat.com
+#
+# Examples:
+#    $ echo "asdf qwer 1234" | enumer
+#    asdf  qwer  1234
+#    1     2     3
+#
+#    $ iostat -x > /tmp/iostat.out
+#    $ grep await /tmp/iostat.out | enumer
+#    Device:  rrqm/s  wrqm/s  r/s  w/s  rkB/s  wkB/s  avgrq-sz  avgqu-sz  await  r_await  w_await  svctm  %util
+#    1        2       3       4    5    6      7      8         9         10     11       12       13     14
+
+
+awk '
+{
+	line = ""
+	for (i = 0; i < NF; i++) {
+		if ( i == 0 )
+			line = i+1
+		else
+			line = line " " i+1
+	}
+	print $0
+	print line
+} 
+' | column -t
