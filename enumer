@@ -4,7 +4,7 @@
 # Print the fields and the number of the fields on the next line.
 #
 # Author: Andrew Brownfield
-# email:  abrownfi@redhat.com
+# email:  brownfielda@gmail.com
 #
 # Examples:
 #    $ echo "asdf qwer 1234" | enumer
