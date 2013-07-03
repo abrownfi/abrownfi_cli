@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+
+# Convert `multipath -v4 -ll` output to `multipath -ll` output.
+# Works for RHEL 5 and RHEL 6 output.
+#
+
+file=$1
+
+# If no parameter, look for an existing one.  Naiively grab the first
+if [[ -z $file ]]
+then
+	file=`find . -name multipath_-v4_-ll | head -n 1`
+fi
+
+# Need to be in a place where there is a multipath_-v4_-ll or specify one
+if [[ -z $file ]]
+then
+	echo "Usage: mpathcleaner <filename>"
+	exit 1
+fi
+
+# do work
+#grep --color=always -e ") dm-" -e "^\[\?size" -e "^ *[\\|\`]" -e "[a-zA-Z0-9\-]* dm-" "$file" | grep -v -e "blacklist"
+grep --color=never -e ") dm-" -e "^\[\?size" -e "^ *[\\|\`]" -e "[a-zA-Z0-9\-]* dm-" "$file" | grep -v -e "blacklist"
