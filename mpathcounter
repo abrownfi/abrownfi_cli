@@ -17,14 +17,14 @@
 
 
 /dm-/ {
+	# print count of old mpath device, unless it's the first line 
+	if (pathcount > 0)
+		print " " pathcount
+	
 	# new mpath device
 	pathcount=0
 	wwid=""
 	alias=""
-
-	# print count of old mpath device, unless it's the first line 
-	if (pathcount > 0)
-		print " " pathcount
 
 	# Some mpath devices are named by WWID, some have alias/user_friendly_name
 	if ( $2 ~ /\(.*\)/ ) {
