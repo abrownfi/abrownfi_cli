@@ -1,0 +1,52 @@
+#!/usr/bin/awk -f
+
+# mpathcounter
+# Count the number of paths per multipath device from `multipath -ll` output.
+#
+# Works for RHEL 5 and RHEL 6.  Not tested against many variants
+#
+# Author: Andrew Brownfield
+# email:  brownfielda@gmail.com
+#
+# Examples:
+#    $ multipath -ll | mpathcounter
+#    mpath1  (360060abc0000a0000000b00000000001)  4
+#    mpath2  (360060abc0000a0000000b00000000002)  8
+#    mpath3  (360060abc0000a0000000b00000000003)  8
+#    mpath4  (360060abc0000a0000000b00000000004)  6
+
+
+/dm-/ {
+	# new mpath device
+	pathcount=0
+	wwid=""
+	alias=""
+
+	# print count of old mpath device, unless it's the first line 
+	if (pathcount > 0)
+		print " " pathcount
+
+	# Some mpath devices are named by WWID, some have alias/user_friendly_name
+	if ( $2 ~ /\(.*\)/ ) {
+		alias=$1
+		wwid=$2
+	}
+	else {
+		wwid=$1
+		alias="===NOALIAS==="
+	}
+
+	# Clean up up the wwids and print
+	gsub(/\(|\)/, "", wwid)
+	printf "%s %s", alias, wwid
+}
+
+/sd/ {
+	 pathcount+=1
+}
+
+# Print out the final count
+END {
+	print " " pathcount
+}
+
