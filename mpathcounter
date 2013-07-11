@@ -1,4 +1,4 @@
-#!/usr/bin/awk -f
+#!/bin/awk -f
 
 # mpathcounter
 # Count the number of paths per multipath device from `multipath -ll` output.

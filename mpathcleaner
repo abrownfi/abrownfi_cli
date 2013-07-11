@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 # Convert `multipath -v4 -ll` output to `multipath -ll` output.
 # Works for RHEL 5 and RHEL 6 output.
